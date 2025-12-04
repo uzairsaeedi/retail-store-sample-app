@@ -50,7 +50,7 @@ public class DynamoDBConfiguration {
     if (StringUtils.hasLength(properties.getEndpoint())) {
       log.info("DynamoDB endpoint: {}", properties.getEndpoint());
 
-      builder.region(Region.US_WEST_2);
+      builder.region(Region.US_EAST_1);
       builder.endpointOverride(URI.create(properties.getEndpoint()));
     }
 

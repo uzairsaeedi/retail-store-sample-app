@@ -140,7 +140,7 @@ Configure these secrets in your GitHub repository settings:
 |-------------|-------------|---------|
 | `AWS_ACCESS_KEY_ID` | AWS Access Key for ECR/EKS access | `AKIA...` |
 | `AWS_SECRET_ACCESS_KEY` | AWS Secret Key | `wJalrXUt...` |
-| `AWS_REGION` | AWS Region for resources | `us-west-2` |
+| `AWS_REGION` | AWS Region for resources | `us-east-1` |
 | `AWS_ACCOUNT_ID` | AWS Account ID for ECR URLs | `123456789012` |
 
 ### **IAM Permissions Required**
