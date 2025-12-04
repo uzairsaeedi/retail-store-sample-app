@@ -30,7 +30,7 @@ This is a sample application designed to illustrate various concepts related to 
 - [Infrastructure Components](#infrastructure-components)
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Monitoring and Observability](#monitoring-and-observability)
-- [Cleanup](https://github.com/LondheShubham153/retail-store-sample-app/blob/main/README.md#step-12-cleanup)
+- [Cleanup](https://github.com/uzairsaeedi/retail-store-sample-app/blob/main/README.md#step-12-cleanup)
 - [Troubleshooting](#troubleshooting)
 
 ## Overview
@@ -80,7 +80,7 @@ The Infrastructure Architecture follows cloud-native best practices:
 
 1. **Install Prerequisites**: AWS CLI, Terraform, kubectl, Docker, Helm
 2. **Configure AWS**: `aws configure` with appropriate credentials
-3. **Clone Repository**: `git clone https://github.com/LondheShubham153/retail-store-sample-app.git`
+3. **Clone Repository**: `git clone https://github.com/uzairsaeedi/retail-store-sample-app.git`
 4. **Deploy Infrastructure**: Run Terraform in two phases (see [Getting Started](#getting-started))
 5. **Access Application**: Get load balancer URL and browse the retail store
 
@@ -112,7 +112,7 @@ This repository uses a **dual-branch approach** for different deployment scenari
 
 1. **Install Prerequisites**: AWS CLI, Terraform, kubectl, Docker, Helm
 2. **Configure AWS**: `aws configure` with appropriate credentials
-3. **Clone Repository**: `git clone https://github.com/LondheShubham153/retail-store-sample-app.git`
+3. **Clone Repository**: `git clone https://github.com/uzairsaeedi/retail-store-sample-app.git`
 4. **Deploy Infrastructure**: Run Terraform in two phases (see [Getting Started](#getting-started))
 5. **Access Application**: Get load balancer URL and browse the retail store
 
@@ -208,8 +208,24 @@ git clone https://github.com/uzairsaeedi/retail-store-sample-app.git
 ```sh
 cd retail-store-sample-app/terraform/
 terraform init
+```
+
+**First, create the VPC infrastructure:**
+```sh
+terraform apply "-target=module.vpc" --auto-approve
+```
+
+**Then, deploy the cluster:**
+```sh
+terraform apply "-target=module.retail_app_eks" --auto-approve
+```
+
+**Finally, deploy the remaining resources (ArgoCD, Ingress Controller, etc.):**
+```sh
 terraform apply --auto-approve
 ```
+
+> **Note**: We deploy in two phases - VPC first, then the EKS cluster and other resources. This ensures proper dependency management and avoids potential race conditions.
 
 <img width="1205" height="292" alt="image" src="https://github.com/user-attachments/assets/6f1e407e-4a4e-4a4c-9bdf-0c9b89681368" />
 
@@ -275,6 +291,14 @@ Check if the nodes are running:
 
 ```bash
 kubectl get nodes
+```
+
+Create a demo namespace and deploy a test nginx pod:
+
+```bash
+kubectl create ns demo-nginx
+kubectl run nginx --image=nginx --port=80 -n demo-nginx
+kubectl get pods -n demo-nginx
 ```
 
 ### Step 7: Access the Application:
